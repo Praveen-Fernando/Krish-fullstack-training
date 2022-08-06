@@ -1,8 +1,5 @@
-import { HashLocationStrategy } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { EmployeeService } from './employee.service';
-// import employees from './data/employees.json';
+import { Component, OnInit } from '@angular/core';
+import employees from './data/employees.json';
 import { Employee } from './employees.model';
 
 @Component({
@@ -10,14 +7,13 @@ import { Employee } from './employees.model';
   templateUrl: './employees.component.html',
   styleUrls: ['./employees.component.scss']
 })
-export class EmployeesComponent implements OnInit, OnDestroy{
+export class EmployeesComponent implements OnInit {
 
   title:string = 'CosMos - Employee Management System'
-  employees!: Employee[];
-  filteredEmployees!: Employee[];
+  employees:Employee[] = employees;
+  filteredEmployees:Employee[] = employees;
   showIcon:boolean = false;
   message:string = ''
-  subscriber!:Subscription;
   private _designationFilter:string=''
   
   set designationFilter(value: string){
@@ -29,19 +25,20 @@ export class EmployeesComponent implements OnInit, OnDestroy{
     return this._designationFilter;
   }
 
-  constructor(private employeeService:EmployeeService) { }
+  //constructor(private employeeService:EmployeeService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.subscriber =this.employeeService.getEmployees().subscribe({
-      next: data=>{
-      this.filteredEmployees = data;
-      this.employees = this.filteredEmployees}
-    })
+    // this.subscriber =this.employeeService.getEmployees().subscribe({
+    //   next: data=>{
+    //   this.filteredEmployees = data;
+    //   this.employees = this.filteredEmployees}
+    //})
   }
  
-  ngOnDestroy(){
-    this.subscriber.unsubscribe();
-  }
+  // ngOnDestroy(){
+  //   this.subscriber.unsubscribe();
+  // }
 
   toggleIcon(){
     this.showIcon = !this.showIcon;
@@ -55,3 +52,4 @@ export class EmployeesComponent implements OnInit, OnDestroy{
     this.message = value;
   }
 }
+

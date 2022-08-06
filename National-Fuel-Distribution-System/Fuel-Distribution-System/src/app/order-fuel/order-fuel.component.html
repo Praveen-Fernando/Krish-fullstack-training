@@ -1,0 +1,53 @@
+<div class="submit-form">
+    
+    <h1>Fuel Reservation</h1><br>
+    <div *ngIf="!submitted">
+        <form class="formdiv">
+            <!-- Fuel Station Name -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form6Example3">Fuel Station Name</label>
+                <input class="form-control" type="text" id="fuelStationName" 
+                [(ngModel)]="order.fuelStationName" name="fuelStationName"/>
+            </div>
+        
+            <!-- Fuel Station Number -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form6Example4">Fuel Station Number</label>
+                <input class="form-control" type="text" id="fuelStationNumber" 
+                [(ngModel)]="order.fuelStationNumber" name="fuelStationNumber"/>
+            </div>
+
+            <!-- Fuel Type -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form6Example4">Fuel Type</label><br>
+                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                <select class="form-control" [(ngModel)]='order.fuelTypeId' name="fuelTypeId" id="fuelTypeId" class='form-control' placeholder="Enter reference ID Number">
+                    <option disabled selected>Select Type...</option>
+                    <option value="1">Petrol 92</option>
+                    <option value="2">Petrol 95</option>
+                    <option value="3">Diesel</option>
+                    <option value="4">Super Diesel</option>
+                </select>
+            </div>
+        
+            <!-- Fuel Capasity -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form6Example4">Fuel Capasity</label><br>
+                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                <select class="select" [(ngModel)]='order.fuelCapacity' name="fuelCapacity" id="fuelCapacity" class='form-control'>
+                    <option disabled selected>Select Capasity...</option>
+                    <option value="3300">3300</option>
+                    <option value="6600">6600</option>
+                    <option value="13200">13200</option>
+                </select>
+            </div>
+        
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary col-md-12" (click)="saveOrder()" style="background-color: #B7132C;" routerLink="">Place order</button>
+            <div *ngIf="submitted">
+                <h4>Order Created Successfully!</h4>
+                <button class="btn btn-success" (click)="newOrder()">Add</button>
+              </div>
+        </form>
+    </div>
+</div>

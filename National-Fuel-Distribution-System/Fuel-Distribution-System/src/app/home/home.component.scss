@@ -1,0 +1,22 @@
+h1{
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bolder;
+    color: #B7132C;
+}
+
+.background{
+    width: -webkit-fill-available;
+    height: fit-content;
+    background-size: cover;
+  }
+
+.logo{
+    width: 25%;
+    display: block;
+    position: absolute;
+      top: 10%;
+      left: 38%;
+}

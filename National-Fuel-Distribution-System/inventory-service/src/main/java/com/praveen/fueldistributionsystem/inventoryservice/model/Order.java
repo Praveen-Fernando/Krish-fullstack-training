@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
 import javax.persistence.GeneratedValue;
-import java.util.UUID;
+
 
 @Document("Orders")
 public class Order {

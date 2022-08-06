@@ -1,35 +1,48 @@
-package com.praveen.fueldistributionsystem.inventoryservice.model;
+package com.praveen.fueldistributionsystem.scheduleservice.model;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Transient;
+import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDate;
 
-@Document("ReservedFuel")
-public class ReservedFuel {
+@Document("Schedule")
+public class Schedule {
 
     @Transient
-    public static final String SEQUENCE_NAME = "ReservedFuel_Sequence";
+    public static final String SEQUENCE_NAME = "Delivery_Sequence";
     @Id
-    private int orderReferenceId;
+    private int orderScheduleId;
 
+    private int orderReferenceId;
     private String orderId;
     private String fuelStationName;
     private String fuelStationNumber;
     private String fuelType;
     private int reservedFuelAmount;
-    private String reservedStatus;
+    private LocalDate deliveryDate;
+    private String scheduleStatus;
 
-    public ReservedFuel() {
+    public Schedule() {
     }
 
 
-    public ReservedFuel(String orderId, String fuelStationName, String fuelStationNumber, String fuelType, int reservedFuelAmount, String reservedStatus) {
+    public Schedule(int orderReferenceId, String orderId, String fuelStationName, String fuelStationNumber, String fuelType, int reservedFuelAmount, LocalDate deliveryDate, String scheduleStatus) {
+        this.orderReferenceId = orderReferenceId;
         this.orderId = orderId;
         this.fuelStationName = fuelStationName;
         this.fuelStationNumber = fuelStationNumber;
         this.fuelType = fuelType;
         this.reservedFuelAmount = reservedFuelAmount;
-        this.reservedStatus = reservedStatus;
+        this.deliveryDate = deliveryDate;
+        this.scheduleStatus = scheduleStatus;
+    }
+
+    public int getOrderScheduleId() {
+        return orderScheduleId;
+    }
+
+    public void setOrderScheduleId(int orderScheduleId) {
+        this.orderScheduleId = orderScheduleId;
     }
 
     public int getOrderReferenceId() {
@@ -80,12 +93,20 @@ public class ReservedFuel {
         this.reservedFuelAmount = reservedFuelAmount;
     }
 
-    public String getReservedStatus() {
-        return reservedStatus;
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
     }
 
-    public void setReservedStatus(String reservedStatus) {
-        this.reservedStatus = reservedStatus;
+    public void setDeliveryDate(LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
+    }
+
+    public String getScheduleStatus() {
+        return scheduleStatus;
+    }
+
+    public void setScheduleStatus(String scheduleStatus) {
+        this.scheduleStatus = scheduleStatus;
     }
 
 }

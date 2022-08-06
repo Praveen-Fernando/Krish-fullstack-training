@@ -11,6 +11,11 @@ spring:
       port: 27017
       host: localhost
   kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
     consumer:
       group-id: group-Id
       bootstrap-servers: localhost:9092
@@ -18,9 +23,14 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       auto-offset-reset: earliest
 
+
 order:
   topic:
     name: orders-topic
+
+reserve:
+  topic:
+    name: reserved-topic
 
 auto:
   create:

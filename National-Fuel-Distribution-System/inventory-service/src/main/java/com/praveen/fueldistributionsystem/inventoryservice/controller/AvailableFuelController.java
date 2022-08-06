@@ -1,8 +1,8 @@
 package com.praveen.fueldistributionsystem.inventoryservice.controller;
 
 import com.praveen.fueldistributionsystem.inventoryservice.model.AvailableFuel;
-import com.praveen.fueldistributionsystem.inventoryservice.service.AvailableFuelService;
 //import com.praveen.fueldistributionsystem.inventoryservice.service.SequenceGeneratorService;
+import com.praveen.fueldistributionsystem.inventoryservice.service.InventoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public class AvailableFuelController {
 
     @Autowired
-    AvailableFuelService availableFuelService;
+    InventoryService inventoryService;
 
 
 //    @RequestMapping(value = "/addFuel", method = RequestMethod.POST)

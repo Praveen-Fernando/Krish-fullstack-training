@@ -1,7 +1,8 @@
-package com.praveen.fueldistributionsystem.inventoryservice.model;
+package com.praveen.fueldistributionsystem.scheduleservice.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Transient;
 
 @Document("ReservedFuel")

@@ -18,9 +18,9 @@ spring:
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       auto-offset-reset: earliest
 
-order:
+reserve:
   topic:
-    name: orders-topic
+    name: reserved-topic
 
 auto:
   create:

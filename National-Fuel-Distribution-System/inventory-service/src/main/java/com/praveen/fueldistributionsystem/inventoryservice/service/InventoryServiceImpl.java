@@ -1,4 +1,4 @@
-package com.praveen.fueldistributionsystem.inventoryservice.listener;
+package com.praveen.fueldistributionsystem.inventoryservice.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,20 +8,26 @@ import com.praveen.fueldistributionsystem.inventoryservice.Repository.ReservedFu
 import com.praveen.fueldistributionsystem.inventoryservice.model.AvailableFuel;
 import com.praveen.fueldistributionsystem.inventoryservice.model.Order;
 import com.praveen.fueldistributionsystem.inventoryservice.model.ReservedFuel;
-import com.praveen.fueldistributionsystem.inventoryservice.service.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import static com.praveen.fueldistributionsystem.inventoryservice.model.ReservedFuel.SEQUENCE_NAME;
+import java.util.List;
 
 @EnableKafka
 @Service
-public class OrderListener {
+public class InventoryServiceImpl implements InventoryService {
+
 
     @Value("${order.topic.name}")
     private String topicName;
+
+    @Value("${reserve.topic.name}")
+    private String reserveTopicName;
+
 
     @Autowired
     OrderRepository orderRepository;
@@ -35,7 +41,19 @@ public class OrderListener {
     @Autowired
     SequenceGeneratorService sequenceGeneratorService;
 
+    @Autowired
+    KafkaTemplate<String, String> kafkaTemplate;
+
     ObjectMapper objectMapper = new ObjectMapper();
+
+
+    public AvailableFuel addFuel(AvailableFuel availableFuel){
+        return availableFuelRepository.save(availableFuel);
+    }
+
+    public List<AvailableFuel> getFuel(){
+        return availableFuelRepository.findAll();
+    }
 
     @KafkaListener(topics = "orders-topic",groupId = "groupId")
     public void processOrder(String message){
@@ -48,10 +66,10 @@ public class OrderListener {
 
             if(availableFuel.getAvailableFuelCapacity() > order.getFuelCapacity()){
                 order.setOrderStatus("ALLOCATION COMPLETE");
+                ReservedFuel reservedFuel = new ReservedFuel();
                 availableFuel.setAvailableFuelCapacity(availableFuel.getAvailableFuelCapacity() - order.getFuelCapacity());
 
                 if(order.getOrderStatus().equals("ALLOCATION COMPLETE")){
-                    ReservedFuel reservedFuel = new ReservedFuel();
                     reservedFuel.setOrderReferenceId(sequenceGeneratorService.getSequenceNumber(SEQUENCE_NAME));
                     reservedFuel.setOrderId(order.getOrderId());
                     reservedFuel.setFuelStationName(order.getFuelStationName());
@@ -61,6 +79,16 @@ public class OrderListener {
                     reservedFuel.setReservedStatus("FUEL ALLOCATED");
                     reservedFuelRepository.save(reservedFuel);
                 }
+
+                String orderStr = null;
+                try {
+                    orderStr = objectMapper.writeValueAsString(reservedFuel);
+                }catch (JsonProcessingException e){
+                    e.printStackTrace();
+                }
+                kafkaTemplate.send(reserveTopicName,orderStr);
+                System.out.println(">>>>>>>>>" +orderStr);
+
                 orderRepository.save(order);
                 availableFuelRepository.save(availableFuel);
 

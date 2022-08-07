@@ -8,10 +8,16 @@ import com.praveen.fueldistributionsystem.scheduleservice.repository.ReservedFue
 import com.praveen.fueldistributionsystem.scheduleservice.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static com.praveen.fueldistributionsystem.scheduleservice.model.Schedule.SEQUENCE_NAME;
 
@@ -61,5 +67,16 @@ public class ScheduleServiceImpl implements ScheduleService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<Schedule> viewAll() {
+        return scheduleRepository.findAll();
+    }
+
+    @Override
+    public List<Schedule> findByOrderId(String orderId) {
+        List<Schedule> schedules = new ArrayList<>();
+        return scheduleRepository.findByOrderId(orderId);
     }
 }

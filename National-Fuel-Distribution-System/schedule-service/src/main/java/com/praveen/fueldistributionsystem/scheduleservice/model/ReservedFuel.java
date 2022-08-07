@@ -18,6 +18,7 @@ public class ReservedFuel {
     private String fuelStationNumber;
     private String fuelType;
     private int reservedFuelAmount;
+
     private String reservedStatus;
 
     public ReservedFuel() {

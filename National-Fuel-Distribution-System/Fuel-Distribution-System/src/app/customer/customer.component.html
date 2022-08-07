@@ -6,22 +6,22 @@
                 <tr>
                     <th>Fuel Station Name</th>
                     <th>Fuel Station Number</th>
-                    <th>Fuel Capasity</th>
                     <th>Fuel Type</th>
+                    <th>Fuel Capasity</th>
                     <th>Delivery Date</th>
-                    <th>Order Status</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <!-- <td>{{}}</td>
-                    <td>{{}}</td>
-                    <td>{{}}</td>
-                    <td>{{}}</td>
-                    <td>{{}}</td>
-                    <td>{{}}</td> -->
+                <tr *ngFor="let order of orders">
+                    <td>{{order.fuelStationName}}</td>
+                    <td>{{order.fuelStationNumber}}</td>
+                    <td>{{order.fuelType}}</td>
+                    <td>{{order.reservedFuelAmount}}</td>
+                    <td>{{order.deliveryDate}}</td>
+                    <td>{{order.scheduleStatus}}</td>
                    
-                    <!-- </tr> -->
+                    </tr>
             </tbody>
         </table>
     </div>

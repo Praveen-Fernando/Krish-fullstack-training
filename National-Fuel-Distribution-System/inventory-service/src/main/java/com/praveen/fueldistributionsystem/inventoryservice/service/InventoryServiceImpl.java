@@ -47,14 +47,6 @@ public class InventoryServiceImpl implements InventoryService {
     ObjectMapper objectMapper = new ObjectMapper();
 
 
-    public AvailableFuel addFuel(AvailableFuel availableFuel){
-        return availableFuelRepository.save(availableFuel);
-    }
-
-    public List<AvailableFuel> getFuel(){
-        return availableFuelRepository.findAll();
-    }
-
     @KafkaListener(topics = "orders-topic",groupId = "groupId")
     public void processOrder(String message){
         System.out.println("Received Message : " + message);
@@ -68,6 +60,7 @@ public class InventoryServiceImpl implements InventoryService {
                 order.setOrderStatus("ALLOCATION COMPLETE");
                 ReservedFuel reservedFuel = new ReservedFuel();
                 availableFuel.setAvailableFuelCapacity(availableFuel.getAvailableFuelCapacity() - order.getFuelCapacity());
+                orderRepository.save(order);
 
                 if(order.getOrderStatus().equals("ALLOCATION COMPLETE")){
                     reservedFuel.setOrderReferenceId(sequenceGeneratorService.getSequenceNumber(SEQUENCE_NAME));
@@ -89,7 +82,6 @@ public class InventoryServiceImpl implements InventoryService {
                 kafkaTemplate.send(reserveTopicName,orderStr);
                 System.out.println(">>>>>>>>>" +orderStr);
 
-                orderRepository.save(order);
                 availableFuelRepository.save(availableFuel);
 
                 System.out.println("Fuel Type : "+availableFuel.getFuelType()+"\n"+"Updated : " +availableFuel.getAvailableFuelCapacity());
@@ -102,5 +94,18 @@ public class InventoryServiceImpl implements InventoryService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public AvailableFuel addFuel(AvailableFuel availableFuel){
+        return availableFuelRepository.save(availableFuel);
+    }
+
+    public List<AvailableFuel> getFuel(){
+        return availableFuelRepository.findAll();
+    }
+
+    @Override
+    public List<ReservedFuel> viewAllStatus() {
+        return reservedFuelRepository.findAll();
     }
 }

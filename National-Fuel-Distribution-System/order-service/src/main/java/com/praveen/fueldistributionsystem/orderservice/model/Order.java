@@ -20,6 +20,7 @@ public class Order implements Serializable {
     private String fuelStationNumber;
     private int fuelTypeId;
     private int fuelCapacity;
+
     private String orderStatus;
 
     public Order() {

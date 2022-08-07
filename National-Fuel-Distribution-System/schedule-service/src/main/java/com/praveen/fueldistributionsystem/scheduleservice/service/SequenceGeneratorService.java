@@ -1,6 +1,5 @@
 package com.praveen.fueldistributionsystem.scheduleservice.service;
 
-
 import com.praveen.fueldistributionsystem.scheduleservice.model.ScheduleSequence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;

@@ -11,6 +11,7 @@ import { DispatchOrderComponent } from './dispatch-order/dispatch-order.componen
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,9 @@ import { HomeComponent } from './home/home.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    Ng2SearchPipeModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {path: 'orderFuel', component: OrderFuelComponent},
       {path: 'orderStatus', component: OrderStatusComponent},
@@ -33,8 +37,6 @@ import { HomeComponent } from './home/home.component';
       {path: 'home', component: HomeComponent},
       {path: '', redirectTo: 'home', pathMatch: 'full'}
     ]),
-    FormsModule,
-    HttpClientModule
   ],
 
   providers: [],

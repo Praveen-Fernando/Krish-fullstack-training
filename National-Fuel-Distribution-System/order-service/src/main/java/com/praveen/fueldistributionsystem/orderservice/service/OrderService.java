@@ -7,6 +7,5 @@ import java.util.Optional;
 public interface OrderService {
     Order createOrder(Order order);
     List<Order> getAllOrders();
-
     Optional<Order> viewOrderById(String orderId);
 }

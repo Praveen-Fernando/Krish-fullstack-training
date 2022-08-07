@@ -55,6 +55,23 @@ body{
     right: -45px;
   }
   
+table{
+    margin-top: 200px;
+    margin: auto;
+    width: 85%;
+    padding: 10px;
+    margin-top: 39px;
+}
+
+.container {
+  position: relative;
+  border: 3px solid orange;
+  height: 50px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
   
-  
-  
+.btn{
+  background-color: #B7132C;
+  color: white;
+} 

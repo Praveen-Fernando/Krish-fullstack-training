@@ -37,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
         }
         kafkaTemplate.send(topicName,orderStr);
         System.out.println(orderStr);
+        System.out.println(order);
         return order;
     }
 

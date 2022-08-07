@@ -2,6 +2,38 @@
 <body>
     <h1>Track Order Status</h1>
     <form class="search-container">
-        <input class="form-control" id="search-bar" type="text" placeholder="Enter reference ID Number"/>
+        <input class="form-control" id="search-bar" type="text" placeholder="Enter reference ID Number" [(ngModel)]="order.orderId" name="orderId" />
+        <button class="btn" type="button" (click)="searchOrderId(order.orderId)" style="margin-bottom: -32px">Search</button>   
     </form>
+
+    <div class="table">
+        <div style="padding-top: 25px">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Reference ID</th>
+                        <th>Fuel Station Name</th>
+                        <th>Fuel Station Number</th>
+                        <th>Fuel Type</th>
+                        <th>Fuel Capasity</th>
+                        <th>Delivery Date</th>
+                        <th>Status</th>
+                        <th>Order Confirm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders">
+                        <td>{{order.orderId}}</td>
+                        <td>{{order.fuelStationName}}</td>
+                        <td>{{order.fuelStationNumber}}</td>
+                        <td>{{order.fuelType}}</td>
+                        <td>{{order.reservedFuelAmount}}</td>
+                        <td>{{order.deliveryDate}}</td>
+                        <td><strong>{{order.scheduleStatus}}</strong></td>
+                        <td><button class="btn btn-outline-secondary" type="button">Confirm</button></td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
   </body>

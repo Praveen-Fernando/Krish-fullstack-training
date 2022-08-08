@@ -6,6 +6,12 @@ import java.util.Optional;
 
 public interface OrderService {
     Order createOrder(Order order);
+
     List<Order> getAllOrders();
+
     Optional<Order> viewOrderById(String orderId);
+
+    List<Order> findByOrderId(String orderId);
+
+    List<Order> findAllByOrderStatus(String orderStatus);
 }

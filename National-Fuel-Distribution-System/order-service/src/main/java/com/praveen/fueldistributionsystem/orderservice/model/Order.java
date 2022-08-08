@@ -3,9 +3,10 @@ package com.praveen.fueldistributionsystem.orderservice.model;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Transient;
 import java.io.Serializable;
-import java.util.UUID;
+import java.security.SecureRandom;
+import java.time.LocalDate;
+
 
 @Document("Orders")
 public class Order implements Serializable {
@@ -16,22 +17,31 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue
     private String orderId;
+
+    private int orderReferenceId;
+
     private String fuelStationName;
     private String fuelStationNumber;
     private int fuelTypeId;
+    private String fuelType;
     private int fuelCapacity;
+    private LocalDate date;
 
+    private LocalDate dispatchDate;
     private String orderStatus;
 
     public Order() {
     }
 
-
-    public Order(String fuelStationName, String fuelStationNumber, int fuelTypeId, int fuelCapacity, String orderStatus) {
+    public Order(int orderReferenceId, String fuelStationName, String fuelStationNumber, int fuelTypeId, String fuelType, int fuelCapacity, LocalDate date, LocalDate dispatchDate, String orderStatus) {
+        this.orderReferenceId = orderReferenceId;
         this.fuelStationName = fuelStationName;
         this.fuelStationNumber = fuelStationNumber;
         this.fuelTypeId = fuelTypeId;
+        this.fuelType = fuelType;
         this.fuelCapacity = fuelCapacity;
+        this.date = date;
+        this.dispatchDate = dispatchDate;
         this.orderStatus = orderStatus;
     }
 
@@ -43,6 +53,13 @@ public class Order implements Serializable {
         this.orderId = orderId;
     }
 
+    public int getOrderReferenceId() {
+        return orderReferenceId;
+    }
+
+    public void setOrderReferenceId(int orderReferenceId) {
+        this.orderReferenceId = orderReferenceId;
+    }
 
     public String getFuelStationName() {
         return fuelStationName;
@@ -68,12 +85,37 @@ public class Order implements Serializable {
         this.fuelTypeId = fuelTypeId;
     }
 
-    public Integer getFuelCapacity() {
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+
+    public int getFuelCapacity() {
         return fuelCapacity;
     }
 
-    public void setFuelCapacity(Integer fuelCapacity) {
+    public void setFuelCapacity(int fuelCapacity) {
         this.fuelCapacity = fuelCapacity;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalDate getDispatchDate() {
+        return dispatchDate;
+    }
+
+    public void setDispatchDate(LocalDate dispatchDate) {
+        this.dispatchDate = dispatchDate;
     }
 
     public String getOrderStatus() {
@@ -88,11 +130,15 @@ public class Order implements Serializable {
     @Override
     public String toString() {
         return "Order{" +
-                "orderId=" + orderId +
+                "orderId='" + orderId + '\'' +
+                ", orderReferenceId=" + orderReferenceId +
                 ", fuelStationName='" + fuelStationName + '\'' +
                 ", fuelStationNumber='" + fuelStationNumber + '\'' +
                 ", fuelTypeId=" + fuelTypeId +
+                ", fuelType='" + fuelType + '\'' +
                 ", fuelCapacity=" + fuelCapacity +
+                ", date=" + date +
+                ", dispatchDate=" + dispatchDate +
                 ", orderStatus='" + orderStatus + '\'' +
                 '}';
     }

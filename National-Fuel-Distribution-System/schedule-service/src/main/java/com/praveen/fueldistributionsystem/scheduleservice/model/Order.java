@@ -1,14 +1,13 @@
-package com.praveen.fueldistributionsystem.inventoryservice.model;
+package com.praveen.fueldistributionsystem.scheduleservice.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
-
+import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.GeneratedValue;
+import java.io.Serializable;
 import java.time.LocalDate;
 
-
 @Document("Orders")
-public class Order {
+public class Order implements Serializable {
 
 //    @Transient
 //    public static final String SEQUENCE_NAME = "orders_Sequence";
@@ -18,19 +17,19 @@ public class Order {
     private String orderId;
 
     private int orderReferenceId;
-
     private String fuelStationName;
     private String fuelStationNumber;
     private int fuelTypeId;
+
     private String fuelType;
     private int fuelCapacity;
     private LocalDate date;
-
     private LocalDate dispatchDate;
     private String orderStatus;
 
     public Order() {
     }
+
 
     public Order(int orderReferenceId, String fuelStationName, String fuelStationNumber, int fuelTypeId, String fuelType, int fuelCapacity, LocalDate date, LocalDate dispatchDate, String orderStatus) {
         this.orderReferenceId = orderReferenceId;
@@ -84,21 +83,20 @@ public class Order {
         this.fuelTypeId = fuelTypeId;
     }
 
-    public String getFuelType() {
-        return fuelType;
-    }
-
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
-    }
-
-
     public int getFuelCapacity() {
         return fuelCapacity;
     }
 
     public void setFuelCapacity(int fuelCapacity) {
         this.fuelCapacity = fuelCapacity;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
     }
 
     public LocalDate getDate() {
@@ -125,15 +123,19 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+
     @Override
     public String toString() {
         return "Order{" +
                 "orderId='" + orderId + '\'' +
+                ", orderReferenceId=" + orderReferenceId +
                 ", fuelStationName='" + fuelStationName + '\'' +
                 ", fuelStationNumber='" + fuelStationNumber + '\'' +
                 ", fuelTypeId=" + fuelTypeId +
+                ", fuelType='" + fuelType + '\'' +
                 ", fuelCapacity=" + fuelCapacity +
                 ", date=" + date +
+                ", dispatchDate=" + dispatchDate +
                 ", orderStatus='" + orderStatus + '\'' +
                 '}';
     }

@@ -12,15 +12,19 @@ spring:
       host: localhost
   kafka:
     consumer:
-      group-id: group-Id
+      group-id: groupId
       bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       auto-offset-reset: earliest
 
-reserve:
+order:
   topic:
-    name: reserved-topic
+    name: order-topic
+
+schedule:
+  topic:
+    name: schedules-topic
 
 auto:
   create:

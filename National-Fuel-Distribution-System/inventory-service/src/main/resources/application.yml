@@ -17,7 +17,7 @@ spring:
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
     consumer:
-      group-id: group-Id
+      group-id: groupId
       bootstrap-servers: localhost:9092
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -26,11 +26,11 @@ spring:
 
 order:
   topic:
-    name: orders-topic
+    name: order-topic
 
-reserve:
+schedule:
   topic:
-    name: reserved-topic
+    name: schedules-topic
 
 auto:
   create:

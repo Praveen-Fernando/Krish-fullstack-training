@@ -9,6 +9,8 @@ export class Order {
     fuelCapacity?: any;
     reservedFuelAmount?: any;
     deliveryDate?: any;
+    date?: any;
+    orderStatus?: any;
     scheduleStatus?: any;
-    dispatchdate?: any;
+    dispatchDate?: any;
 }

@@ -23,7 +23,6 @@ public class OrderController {
 
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     public Order createOrder(@RequestBody Order order){
-//        order.setOrderId(sequenceGeneratorService.getSequenceNumber(SEQUENCE_NAME));
         return orderService.createOrder(order);
     }
 
@@ -32,8 +31,15 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
-    @RequestMapping(value = "/viewOrder/{id}", method = RequestMethod.GET)
-    public Optional<Order> viewOrderById(@PathVariable("id") String orderId){
-        return orderService.viewOrderById(orderId);
+
+    @RequestMapping(value = "/viewById/{id}", method = RequestMethod.GET)
+    public List<Order> findByOrderId(@PathVariable("id") String orderId){
+        return orderService.findByOrderId(orderId);
+    }
+
+
+    @RequestMapping(value = "/viewAll/scheduled",method = RequestMethod.GET)
+    public List<Order> findAllByOrderStatus(String orderStatus){
+        return orderService.findAllByOrderStatus(orderStatus);
     }
 }

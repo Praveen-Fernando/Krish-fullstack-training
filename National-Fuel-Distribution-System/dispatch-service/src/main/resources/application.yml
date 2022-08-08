@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: dispatch-service
+  data:
+    mongodb:
+      username: admin
+      database: fuel_db
+      port: 27017
+      host: localhost
+  kafka:
+    kafka:
+      producer:
+        bootstrap-servers: localhost:9092
+        key-serializer: org.apache.kafka.common.serialization.StringSerializer
+        value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+dispatch:
+  topic:
+    name: dispatch-topic
+
+auto:
+  create:
+    topics:
+      enable: true

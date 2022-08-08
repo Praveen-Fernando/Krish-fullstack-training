@@ -3,6 +3,7 @@ package com.praveen.fueldistributionsystem.inventoryservice.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import javax.persistence.Transient;
+import java.time.LocalDate;
 
 @Document("ReservedFuel")
 public class ReservedFuel {
@@ -16,20 +17,23 @@ public class ReservedFuel {
     private String fuelStationName;
     private String fuelStationNumber;
     private String fuelType;
-    private int reservedFuelAmount;
-    private String reservedStatus;
+    private int fuelCapacity;
+    private String orderStatus;
+
+    private LocalDate date;
 
     public ReservedFuel() {
     }
 
 
-    public ReservedFuel(String orderId, String fuelStationName, String fuelStationNumber, String fuelType, int reservedFuelAmount, String reservedStatus) {
+    public ReservedFuel(String orderId, String fuelStationName, String fuelStationNumber, String fuelType, int fuelCapacity, String orderStatus, LocalDate date) {
         this.orderId = orderId;
         this.fuelStationName = fuelStationName;
         this.fuelStationNumber = fuelStationNumber;
         this.fuelType = fuelType;
-        this.reservedFuelAmount = reservedFuelAmount;
-        this.reservedStatus = reservedStatus;
+        this.fuelCapacity = fuelCapacity;
+        this.orderStatus = orderStatus;
+        this.date = date;
     }
 
     public int getOrderReferenceId() {
@@ -72,20 +76,29 @@ public class ReservedFuel {
         this.fuelType = fuelType;
     }
 
-    public int getReservedFuelAmount() {
-        return reservedFuelAmount;
+
+    public int getFuelCapacity() {
+        return fuelCapacity;
     }
 
-    public void setReservedFuelAmount(int reservedFuelAmount) {
-        this.reservedFuelAmount = reservedFuelAmount;
+    public void setFuelCapacity(int fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
     }
 
-    public String getReservedStatus() {
-        return reservedStatus;
+
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setReservedStatus(String reservedStatus) {
-        this.reservedStatus = reservedStatus;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }

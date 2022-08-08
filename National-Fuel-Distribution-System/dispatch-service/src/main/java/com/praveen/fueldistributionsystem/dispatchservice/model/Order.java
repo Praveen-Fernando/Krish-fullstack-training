@@ -1,14 +1,15 @@
-package com.praveen.fueldistributionsystem.inventoryservice.model;
+package com.praveen.fueldistributionsystem.dispatchservice.model;
 
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.GeneratedValue;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
 @Document("Orders")
-public class Order {
+public class Order implements Serializable {
 
 //    @Transient
 //    public static final String SEQUENCE_NAME = "orders_Sequence";
@@ -125,15 +126,19 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+
     @Override
     public String toString() {
         return "Order{" +
                 "orderId='" + orderId + '\'' +
+                ", orderReferenceId=" + orderReferenceId +
                 ", fuelStationName='" + fuelStationName + '\'' +
                 ", fuelStationNumber='" + fuelStationNumber + '\'' +
                 ", fuelTypeId=" + fuelTypeId +
+                ", fuelType='" + fuelType + '\'' +
                 ", fuelCapacity=" + fuelCapacity +
                 ", date=" + date +
+                ", dispatchDate=" + dispatchDate +
                 ", orderStatus='" + orderStatus + '\'' +
                 '}';
     }

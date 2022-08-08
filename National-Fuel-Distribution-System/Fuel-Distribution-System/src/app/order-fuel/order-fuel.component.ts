@@ -48,15 +48,3 @@ orders?: Order[];
   this.alert = false;
 }
 }
-
-// getOrderId(OrderId: String) {
-
-//   this.orderService.getOrderId(orderId)
-//   .subscribe({
-//     next: (data) => {
-//       this.orders = data;
-//       console.log(data);
-//     },
-//     error: (e) => console.error(e)
-//   });
-// }

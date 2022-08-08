@@ -12,13 +12,12 @@ public class Schedule {
     public static final String SEQUENCE_NAME = "Delivery_Sequence";
     @Id
     private int orderScheduleId;
-
-    private int orderReferenceId;
     private String orderId;
     private String fuelStationName;
     private String fuelStationNumber;
+    private int fuelTypeId;
     private String fuelType;
-    private int reservedFuelAmount;
+    private int fuelCapacity;
     private LocalDate deliveryDate;
     private String scheduleStatus;
 
@@ -26,13 +25,13 @@ public class Schedule {
     }
 
 
-    public Schedule(int orderReferenceId, String orderId, String fuelStationName, String fuelStationNumber, String fuelType, int reservedFuelAmount, LocalDate deliveryDate, String scheduleStatus) {
-        this.orderReferenceId = orderReferenceId;
+    public Schedule(String orderId, String fuelStationName, String fuelStationNumber, int fuelTypeId, String fuelType, int fuelCapacity, LocalDate deliveryDate, String scheduleStatus) {
         this.orderId = orderId;
         this.fuelStationName = fuelStationName;
         this.fuelStationNumber = fuelStationNumber;
+        this.fuelTypeId = fuelTypeId;
         this.fuelType = fuelType;
-        this.reservedFuelAmount = reservedFuelAmount;
+        this.fuelCapacity = fuelCapacity;
         this.deliveryDate = deliveryDate;
         this.scheduleStatus = scheduleStatus;
     }
@@ -43,14 +42,6 @@ public class Schedule {
 
     public void setOrderScheduleId(int orderScheduleId) {
         this.orderScheduleId = orderScheduleId;
-    }
-
-    public int getOrderReferenceId() {
-        return orderReferenceId;
-    }
-
-    public void setOrderReferenceId(int orderReferenceId) {
-        this.orderReferenceId = orderReferenceId;
     }
 
     public String getOrderId() {
@@ -85,12 +76,21 @@ public class Schedule {
         this.fuelType = fuelType;
     }
 
-    public int getReservedFuelAmount() {
-        return reservedFuelAmount;
+    public int getFuelTypeId() {
+        return fuelTypeId;
     }
 
-    public void setReservedFuelAmount(int reservedFuelAmount) {
-        this.reservedFuelAmount = reservedFuelAmount;
+    public void setFuelTypeId(int fuelTypeId) {
+        this.fuelTypeId = fuelTypeId;
+    }
+
+
+    public int getFuelCapacity() {
+        return fuelCapacity;
+    }
+
+    public void setFuelCapacity(int fuelCapacity) {
+        this.fuelCapacity = fuelCapacity;
     }
 
     public LocalDate getDeliveryDate() {

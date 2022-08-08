@@ -25,7 +25,7 @@ public class InventoryServiceImpl implements InventoryService {
     @Value("${order.topic.name}")
     private String topicName;
 
-    @Value("${reserve.topic.name}")
+    @Value("${schedule.topic.name}")
     private String reserveTopicName;
 
 
@@ -47,7 +47,7 @@ public class InventoryServiceImpl implements InventoryService {
     ObjectMapper objectMapper = new ObjectMapper();
 
 
-    @KafkaListener(topics = "orders-topic",groupId = "groupId")
+    @KafkaListener(topics = "order-topic",groupId = "groupId")
     public void processOrder(String message){
         System.out.println("Received Message : " + message);
         try {
@@ -60,6 +60,8 @@ public class InventoryServiceImpl implements InventoryService {
                 order.setOrderStatus("ALLOCATION COMPLETE");
                 ReservedFuel reservedFuel = new ReservedFuel();
                 availableFuel.setAvailableFuelCapacity(availableFuel.getAvailableFuelCapacity() - order.getFuelCapacity());
+                order.setFuelType(availableFuel.getFuelType());
+                order.setDispatchDate(null);
                 orderRepository.save(order);
 
                 if(order.getOrderStatus().equals("ALLOCATION COMPLETE")){
@@ -68,8 +70,8 @@ public class InventoryServiceImpl implements InventoryService {
                     reservedFuel.setFuelStationName(order.getFuelStationName());
                     reservedFuel.setFuelStationNumber(order.getFuelStationNumber());
                     reservedFuel.setFuelType(availableFuel.getFuelType());
-                    reservedFuel.setReservedFuelAmount(order.getFuelCapacity());
-                    reservedFuel.setReservedStatus("FUEL ALLOCATED");
+                    reservedFuel.setFuelCapacity(order.getFuelCapacity());
+                    reservedFuel.setOrderStatus("FUEL ALLOCATED");
                     reservedFuelRepository.save(reservedFuel);
                 }
 
@@ -84,7 +86,6 @@ public class InventoryServiceImpl implements InventoryService {
 
                 availableFuelRepository.save(availableFuel);
 
-                System.out.println("Fuel Type : "+availableFuel.getFuelType()+"\n"+"Updated : " +availableFuel.getAvailableFuelCapacity());
 
             }else {
                 order.setOrderStatus("ALLOCATION FAILED");

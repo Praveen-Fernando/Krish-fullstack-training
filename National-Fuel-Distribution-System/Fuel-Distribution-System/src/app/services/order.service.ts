@@ -5,9 +5,11 @@ import { Order } from '../models/order.model';
 
 const orderUrl = 'http://localhost:8080/order/createOrder';
 const customerUrl = 'http://localhost:8080/order/getAllOrders';
+const confirmOrderUrl = 'http://localhost:8080/order/confirmOrder';
 const orderstatusUrl = 'http://localhost:8080/order/viewById'; 
 const scheduledUrl = 'http://localhost:8080/order/viewAll/scheduled';
-const dispatchUrl = 'http://localhost:8083/dispatch';
+const dispatchUrl = 'http://localhost:8080/order/dispatchById';
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,14 +23,14 @@ export class OrderService {
     return this.http.post(orderUrl, data);
   }
 
-  
-  // getOrderId(orderId: any): Observable<Order> {
-  //   return this.http.get(`${orderUrl}/${orderId}`);
-  // }
-
   //Order viewbyId
   getByReferenceId(orderId: any): Observable<Order[]> {
     return this.http.get<Order[]>(`${orderstatusUrl}/${orderId}`);
+  }
+
+  //Confirm Order
+  confirmOrderById(orderId: any) {
+    return this.http.get(`${confirmOrderUrl}/${orderId}`,orderId);
   }
 
   //Customers ViewAllOrders 
@@ -42,7 +44,7 @@ export class OrderService {
   }
 
   //dispatch order
-//   dispatchOrderById(orderId: any): Observable<Order[]> {
-//     return this.http.put(`${dispatchUrl}/${orderId}`);
-//   }
+  dispatchOrderById(orderId: any) {
+    return this.http.get(`${dispatchUrl}/${orderId}`,orderId);
+  }
  }

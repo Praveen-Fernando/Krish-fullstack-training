@@ -1,7 +1,7 @@
 import { AnimateTimings } from "@angular/animations";
 
 export class Order {
-    orderId?: string;
+    orderId?: any;
     fuelStationName?: string;
     fuelStationNumber?: string;
     fuelTypeId?: any;

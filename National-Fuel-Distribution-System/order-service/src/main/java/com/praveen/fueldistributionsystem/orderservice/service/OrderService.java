@@ -9,9 +9,15 @@ public interface OrderService {
 
     List<Order> getAllOrders();
 
-    Optional<Order> viewOrderById(String orderId);
+    //Optional<Order> viewOrderById(String orderId);
 
     List<Order> findByOrderId(String orderId);
 
+    List<Order> confirmOrder(String orderId);
+
     List<Order> findAllByOrderStatus(String orderStatus);
+
+    List<Order> callDispatch(String orderId);
+
+
 }

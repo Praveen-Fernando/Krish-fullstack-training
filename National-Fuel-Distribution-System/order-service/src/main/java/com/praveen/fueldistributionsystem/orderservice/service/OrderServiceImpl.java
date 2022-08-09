@@ -2,14 +2,15 @@ package com.praveen.fueldistributionsystem.orderservice.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.praveen.fueldistributionsystem.orderservice.model.Dispatch;
 import com.praveen.fueldistributionsystem.orderservice.model.Order;
 import com.praveen.fueldistributionsystem.orderservice.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,15 +54,25 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
-    @Override
-    public Optional<Order> viewOrderById(String orderId) {
-        return orderRepository.findById(orderId);
-    }
+//    @Override
+//    public Optional<Order> viewOrderById(String orderId) {
+//        return orderRepository.findById(orderId);
+//    }
 
     @Override
     public List<Order> findByOrderId(String orderId) {
-        List<Order> schedules = new ArrayList<>();
         return orderRepository.findByOrderId(orderId);
+    }
+
+    @Override
+    public List<Order> confirmOrder(String orderId) {
+        List<Order> listOrder;
+
+        listOrder = orderRepository.findByOrderId(orderId);
+        Order order = listOrder.get(0);
+        order.setOrderStatus("ORDER RECEIVED");
+        orderRepository.save(order);
+        return listOrder;
     }
 
     @Override
@@ -70,18 +81,21 @@ public class OrderServiceImpl implements OrderService {
         return status;
     }
 
-    @KafkaListener(topics = "dispatch-topic",groupId = "groupId")
-    public void processDispatch(String message){
-        System.out.println("Received Message : " + message);
+    @Override
+    public List<Order> callDispatch(String orderId) {
+        List<Order> schedules;
+
+        schedules = orderRepository.findByOrderId(orderId);
+        Order order = schedules.get(0);
+        order.setDispatchDate(null);
+        String dispatchOrder = null;
         try {
-            Dispatch dispatch = objectMapper.readValue(message, Dispatch.class);
-            System.out.println(">>>>>>>From Dispatch>>>>>>>>>>>>>"+dispatch);
-            Order order = orderRepository.findById(dispatch.getDispatchId()).get();
-            order.setOrderStatus(dispatch.getOrderStatus());
-            order.setDispatchDate(dispatch.getDispatchDate());
-            orderRepository.save(order);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            dispatchOrder = objectMapper.writeValueAsString(order);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
         }
+        kafkaTemplate.send(dispatchTopic, dispatchOrder);
+
+        return schedules;
     }
 }

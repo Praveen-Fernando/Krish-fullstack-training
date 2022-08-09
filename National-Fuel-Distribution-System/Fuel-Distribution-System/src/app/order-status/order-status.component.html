@@ -17,6 +17,7 @@
                         <th>Fuel Type</th>
                         <th>Fuel Capasity</th>
                         <th>Delivery Date</th>
+                        <th>Dispatch Date</th>
                         <th>Status</th>
                         <th>Order Confirm</th>
                     </tr>
@@ -29,8 +30,9 @@
                         <td>{{order.fuelType}}</td>
                         <td>{{order.fuelCapacity}}</td>
                         <td>{{order.date}}</td>
+                        <td>{{order.dispatchDate}}</td>
                         <td><strong>{{order.orderStatus}}</strong></td>
-                        <td><button class="btn btn-outline-secondary" type="button">Confirm</button></td>
+                        <td><button class="btn btn-outline-secondary" type="button" (click)="confirmOrder(order.orderId)">Confirm</button></td>
                         </tr>
                 </tbody>
             </table>

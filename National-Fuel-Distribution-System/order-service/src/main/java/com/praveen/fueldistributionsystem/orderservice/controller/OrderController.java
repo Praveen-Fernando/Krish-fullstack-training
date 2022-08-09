@@ -37,9 +37,19 @@ public class OrderController {
         return orderService.findByOrderId(orderId);
     }
 
+    @RequestMapping(value = "/confirmOrder/{id}", method = RequestMethod.GET)
+    public List<Order> confirmOrder(@PathVariable("id") String orderId){
+        return orderService.confirmOrder(orderId);
+    }
+
 
     @RequestMapping(value = "/viewAll/scheduled",method = RequestMethod.GET)
     public List<Order> findAllByOrderStatus(String orderStatus){
         return orderService.findAllByOrderStatus(orderStatus);
+    }
+
+    @RequestMapping(value = "/dispatchById/{id}", method = RequestMethod.GET)
+    public List<Order> callDispatch(@PathVariable("id") String orderId){
+        return orderService.callDispatch(orderId);
     }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Order } from '../models/order.model';
 import { OrderService } from 'src/app/services/order.service';
-
+import { RouterLink } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router'; 
 
 @Component({
   selector: 'app-dispatch-order',
@@ -9,10 +10,10 @@ import { OrderService } from 'src/app/services/order.service';
   styleUrls: ['./dispatch-order.component.scss']
 })
 export class DispatchOrderComponent implements OnInit {
-  order = {
-    orderId: ''
-  };
-  orders?: Order[];
+  filteredOrders:Order[]=[];
+  display = ['orderId'];
+  orders: Order[]=[];
+  order: any;
 
   constructor(private orderService: OrderService) { }
 
@@ -31,14 +32,13 @@ export class DispatchOrderComponent implements OnInit {
       });
   }
 
-  // dispatchOrder(String: orderId): void {
-  //   this.orderService.dispatchOrderById(orderId)
-  //     .subscribe({
-  //       next: (data) => {
-  //         this.orders = data;
-  //         console.log(data);
-  //       },
-  //       error: (e) => console.error(e)
-  //     });
-  // }
+  dispatchOrder(orderId:String): void{
+    this.orderService.dispatchOrderById(orderId).subscribe({
+      next: (res) => {
+        console.log(orderId);
+        window.location.reload();
+      }
+    });
+  }
 }
+

@@ -4,27 +4,27 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Rererance ID</th>
                     <th>Fuel Station Name</th>
                     <th>Fuel Station Number</th>
                     <th>Fuel Type</th>
                     <th>Fuel Capasity</th>
                     <th>Delivery Date</th>
-                    <th>Dispatch Date</th>
                     <th>Order Status</th>
                     <th>Dispatch Order</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let order of orders">
+                    <td>{{order.orderId}}</td>
                     <td>{{order.fuelStationName}}</td>
                     <td>{{order.fuelStationNumber}}</td>
                     <td>{{order.fuelType}}</td>
                     <td>{{order.fuelCapacity}}</td>
                     <td>{{order.date}}</td>
-                    <td>{{order.dispatchDate}}</td>
                     <td><strong>{{order.orderStatus}}</strong></td>
-                    <!-- <td><button class="btn btn-warning" type="button" (click)="dispatchOrder(order.orderId)">Dispatch</button></td> -->
-                    </tr>
+                    <td><button class="btn btn-warning" (click)="dispatchOrder(order.orderId)" routerLink="/dispatch">Dispatch Now</button></td>
+                </tr>
             </tbody>
         </table>
     </div>

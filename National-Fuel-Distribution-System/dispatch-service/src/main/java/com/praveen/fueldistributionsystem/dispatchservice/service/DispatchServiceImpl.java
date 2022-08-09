@@ -2,18 +2,15 @@ package com.praveen.fueldistributionsystem.dispatchservice.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.praveen.fueldistributionsystem.dispatchservice.model.Dispatch;
 import com.praveen.fueldistributionsystem.dispatchservice.model.Order;
-import com.praveen.fueldistributionsystem.dispatchservice.repository.DispatchRepository;
 import com.praveen.fueldistributionsystem.dispatchservice.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class DispatchServiceImpl implements DispatchService {
@@ -22,41 +19,25 @@ public class DispatchServiceImpl implements DispatchService {
     String dispatchTopic;
 
     @Autowired
-    DispatchRepository dispatchRepository;
-
-    @Autowired
     OrderRepository orderRepository;
-
-    @Autowired
-    KafkaTemplate<String, String> kafkaTemplate;
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    @Override
-    public Optional<Dispatch> dispatchOrder(Dispatch dispatch) {
-        dispatch.setOrderStatus("ORDER DISPATCHED");
-        LocalDate localDate = LocalDate.now();
-        dispatch.setDispatchDate(localDate);
-
-        dispatch = dispatchRepository.save(dispatch);
-
-        String dispatchOrder = null;
+    @KafkaListener(topics = "dispatch-topics",groupId = "groupId")
+    public void processDispatch(String message){
+        System.out.println("Received Message : " + message);
         try {
-            dispatchOrder = objectMapper.writeValueAsString(dispatch);
-        }catch (JsonProcessingException e){
-            e.printStackTrace();
+            Order order = objectMapper.readValue(message, Order.class);
+            System.out.println(">>>>>>>>>>>>>>>>>>>>"+order.getOrderId());
+
+            order.setOrderStatus("ORDER DISPATCHED");
+            LocalDate localDate = LocalDate.now();
+            order.setDispatchDate(localDate);
+            orderRepository.save(order);
+
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
-        kafkaTemplate.send(dispatchTopic, dispatchOrder);
-        System.out.println(dispatchOrder);
-        System.out.println(dispatch);
-
-        return Optional.of(dispatch);
-    }
-
-    @Override
-    public List<Order> findByOrderId(String orderId) {
-        List<Order> schedules = new ArrayList<>();
-        return orderRepository.findByOrderId(orderId);
     }
 
 }

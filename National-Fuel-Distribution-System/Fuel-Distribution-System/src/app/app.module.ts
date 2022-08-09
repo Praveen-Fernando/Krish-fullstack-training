@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router'; // CLI imports router
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { OrderFuelComponent } from './order-fuel/order-fuel.component';
-import { OrderConfirmComponent } from './order-confirm/order-confirm.component';
 import { OrderStatusComponent } from './order-status/order-status.component';
 import { CustomerComponent } from './customer/customer.component';
 import { DispatchOrderComponent } from './dispatch-order/dispatch-order.component';
@@ -17,7 +16,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
   declarations: [
     AppComponent,
     OrderFuelComponent,
-    OrderConfirmComponent,
     OrderStatusComponent,
     CustomerComponent,
     DispatchOrderComponent,
@@ -31,7 +29,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     RouterModule.forRoot([
       {path: 'orderFuel', component: OrderFuelComponent},
       {path: 'orderStatus', component: OrderStatusComponent},
-      {path: 'orderConfirm', component: OrderConfirmComponent},
       {path: 'customers', component: CustomerComponent},
       {path: 'dispatch', component: DispatchOrderComponent},
       {path: 'home', component: HomeComponent},
